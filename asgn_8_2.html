@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Assignment 8.2</title>
+
+<style>
+	body {
+		text-align: center;
+	}
+	#loginView {
+		display: none;
+	}
+	#signView {
+		display: none;
+
+	}
+
+	#welcome {
+		display : none;
+	}
+
+</style>
+
+<script>
+
+	var users = [];
+	function showLogin() {
+		document.getElementById("mainView").style.display="none";
+		document.getElementById("loginView").style.display="block";
+	}
+
+	function showSignup() {
+		document.getElementById("mainView").style.display="none";
+		document.getElementById("signView").style.display="block";
+	}
+
+	function backToMain() {
+		document.getElementById("mainView").style.display="block";
+		document.getElementById("loginView").style.display="none";
+		document.getElementById("signView").style.display="none";
+	}
+
+	function signUser() {
+		var userName = document.getElementById("signName").value;
+		var email = document.getElementById("signEmail").value;
+		var pass = document.getElementById("signPass").value;
+
+		var currentUser = {email : email, pass : pass, user : userName};
+		console.log(currentUser);
+		users.push(currentUser);
+		console.log(users);
+	}
+
+	function loginUser() {
+		var email = document.getElementById("loginEmail").value;
+		var pass = document.getElementById("loginPass").value;
+		for(i=0; i<users.length; i++) {
+			if((email == users[i].email) && (pass = users[i].pass)) {
+				console.log("match");
+				document.getElementById("welcome").innerHTML = "Welcome " +  users[i].user + "<br><button onclick='logout()'>Logout</button>";
+				document.getElementById("welcome").style.display="block";
+				document.getElementById("loginView").style.display="none";
+			}
+			else {
+				console.log("no match");
+				document.getElementById("error").inerHTML = "Incorrect Email Password Eneterd";	
+			}
+		}
+	}
+	function logout() {
+		document.getElementById("mainView").style.display = "block";
+		document.getElementById("welcome").style.display = "none";
+	}
+</script>
+
+</head>
+<body>
+	<div class="header">
+		<h2>MySelfieTech</h2>
+	</div>
+	<br>
+	<div id="welcome">
+	</div>
+	<div id="loginView">
+		Login
+		<form action="#" onsubmit="loginUser()">
+			<input type="email" id="loginEmail" placeholder="Email" required><br>
+			<input type="password" id="loginPass" placeholder="Password" required><br>
+			<span id="error"></span>
+			<input type="submit" value="Submit query"><br>
+		</form>
+		<br>
+		<button id="loginBack" onclick="backToMain()">Back</button>
+	</div>
+
+	<div id="signView">
+		SignUp
+		<form action="#" onsubmit="signUser()">
+			<input type="text" id="signName" placeholder="Name" required><br>
+			<input type="email" id="signEmail" placeholder="Email" required><br>
+			<input type="password" id="signPass" placeholder="Password" required><br>
+			<input type="submit" value="Submit query"><br>
+		</form>
+		<br>
+		<button id="signBack" onclick="backToMain()">Back</button>
+		
+	</div>
+
+	<div id="mainView">
+		<button id="login" onclick="showLogin()">Login</button>
+		<button id="signup" onclick="showSignup()">Signup</button>
+	</div>
+
+</body>
+</html>
